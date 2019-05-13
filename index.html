@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ConSearch</title>
+</head>
+<body>
+
+    <h1 style="text-align: center;"> ConSearch </h1>
+
+    <!-- Artist select box -->
+    <form id="artist-form">
+
+        <!-- label for text box -->
+        <label for="artist-input"> Choose Your Artist </label>
+
+        <!-- text input box -->
+        <input type= "text" id="artist-input"><br>
+
+        <!-- Submit button -->
+        <input id="select-artist" type="submit" value="Search">
+
+    </form>
+
+    <!-- artist info -->
+    <div id="artist-div"></div>
+
+    
+     
+</body>
+
+   <script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+  
+  <script>
+
+    function searchBands(artist) {
+
+        //api
+         var queryURL = "";
+
+         $.ajax({
+             url: queryURL,
+             method: "GET"
+         }).done(function(response) {
+
+            //printing
+            console.log(response);
+
+            //constructing html
+            
+
+         })
+
+    }
+
+  </script>
+</html>
