@@ -6,76 +6,82 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ConSearch</title>
 </head>
-<body style="background-color: gray;">
+<body style="background-image: url(https://media0.giphy.com/media/A06UFEx8jxEwU/giphy.gif); color: white;">
 
-    <h1 style="text-align: center; color: white;"> ConSearch </h1>
-
-    <!-- Artist select box -->
+    <h1 style="text-align: center; color: aquamarine;"> ConSearch </h1>
+    <!-- Artist Select Box -->
     <form id="artist-form">
 
-        <!-- label for text box -->
-        <label for="artist-input"> Choose Your Artist </label>
+        <!-- Label for Text Box -->
+        <label for="artist-input" style="font-size: 30px;">Choose Your Artist</label>
 
-        <!-- text input box -->
-        <input type= "text" id="artist-input"><br>
+        <!-- Text Input Box -->
+        <input type="text" id="artist-input"><br>
 
-        <!-- Submit button -->
-        <input id="select-artist" type="submit" value="Search">
+        <!-- Submit Button -->
+        <input id="select-artist" type="submit" value="Select">
 
     </form>
 
-    <!-- artist info -->
+    <!-- Artist Information -->
     <div id="artist-div"></div>
 
-    
-     
 </body>
 
-   <script
-  src="https://code.jquery.com/jquery-3.4.0.min.js"
-  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
-  
-  <script>
 
-    function searchBands(artist) {
+<script>
+    
+    function searchBandsInTown(artist)
+    {
+        // Querying the bandsintown api for the selected artist, the 
+        // ?app_id parameter is required, but can equal anything
+        var queryURL = "https://rest.bandsintown.com/artists/" + artist +
+                        "?app_id=codingbootcamp";
+        $.ajax({
 
-        //api
-         var queryURL = "https://rest.bandsintown.com/artists/" + artists + "?app_id=codingbootcamp";
+            url: queryURL,
+            method: "GET"
 
-         $.ajax({
-             url: queryURL,
-             method: "GET"
-         }).done(function(response) {
+        }).done(function(response) {
 
-            //printing
+            // Printing the entire object to console
             console.log(response);
 
-            //constructing html
+            // Constructing HTML containing the artist information
             var artistName = $("<h1>").text(response.name);
-            var artistURL = $("<a>").attr("href", response.url).append(artistName);
+            var artistUrl = $("<a>").attr("href", response.url).append(artistName);
             var artistImage = $("<img>").attr("src", response.thumb_url);
-            var trackerCount = $("<h2>").text(response.tracker_count + " fans tracking this artist");
-            var upcomingEvents = $("<h2>").text(response.upcoming_event_count) + " upcoming events");
+            var trackerCount = $("<h2>").text(response.tracker_count +
+                                " fans tracking this artist");
+            var upcomingEvents = $("<h2>").text(response.upcoming_event_count +
+                                 " upcoming event(s)");
             var goToArtist = $("<a>").attr("href", response.url).text("See Tour Dates");
 
+            // Empty the contents of the artist-div, append the new artist content
             $("#artist-div").empty();
             $("#artist-div").append(artistUrl, artistImage, trackerCount, upcomingEvents, goToArtist);
-
-
-         })
-
+      
+        });
     }
 
-
+    // Event handler for user clicking the select-artist button
     $("#select-artist").on("click", function(event) {
 
+        // Preventing the button from trying to submit the form
         event.preventDefault();
 
+        // Storing the artist name
         var artist = $("#artist-input").val().trim();
 
-        searchBands();
+        // Running the searchBandsInTown function (passing in the artist as an argument)
+        searchBandsInTown(artist);
 
-    })
-  </script>
+    });
+
+</script>
+
 </html>
